@@ -43,8 +43,9 @@ if (interactive()) {
 #### DO NOT CHANGE
 
 # Output the results for tests
-output_t_test(t_test_result)
-
+if (!interactive()) {
+  output_t_test(t_test_result)
+}
 #### DO NOT CHANGE
 
 

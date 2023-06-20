@@ -14,8 +14,8 @@ output_t_test <- function(t_test_result) {
 output_chi_square <- function(chi_square_result) {
 
   cat("\nChi-Square Results\n")
-  print(str_glue("Chi-Square: {chi_square_result$statistic}"))
-  print(str_glue("P-Value: {chi_square_result$p.value}"))
+  print(str_glue("Chi-Square: {round(chi_square_result$statistic, 4)}"))
+  print(str_glue("P-Value: {round(chi_square_result$p.value, 4)}"))
 
   invisible()
 }
@@ -24,13 +24,13 @@ output_aov <- function(anova_result) {
 
   cat("\nANOVA Results\n")
   coefs <- coef(anova_result)
-  print(str_glue("Intercept: {coefs[1]}"))
-  print(str_glue("School B: {coefs[2]}"))
-  print(str_glue("School C: {coefs[3]}"))
+  print(str_glue("Intercept: {round(coefs[1], 4)}"))
+  print(str_glue("School B: {round(coefs[2], 4)}"))
+  print(str_glue("School C: {round(coefs[3], 4)}"))
 
   summarised <- summary(anova_result)
-  print(str_glue("F-Statistic: {summarised[[1]]$`F value`[1]}"))
-  print(str_glue("P-Value: {summarised[[1]]$`Pr(>F)`[1]}"))
+  print(str_glue("F-Statistic: {round(summarised[[1]]$`F value`[1], 4)}"))
+  print(str_glue("P-Value: {round(summarised[[1]]$`Pr(>F)`[1], 4)}"))
 
   invisible()
 }
