@@ -21,19 +21,17 @@ source("setup.R")
 
 ### Step 1: Data Preparation
 
-# First, load the Heights dataset.
-# This dataset has heights for males and females.
-# Find more about it by running `?heights`
-data(heights)
+# First, load the `mtcars` dataset.
+data(mtcars)
 
 # Assign the heights of males to the variable 'male_heights'
-male_heights <- "..."
+male_heights <- heights[heights[["sex"]] == "Male", "height"]
 
 # Assign the heights of females to the variable 'female_heights'
-female_heights <- "..."
+female_heights <- heights[heights[["sex"]] == "Female", "height"]
 
 # Conduct the t-test using the 't.test()' function
-t_test_result <- "..."
+t_test_result <- t.test(male_heights, female_heights)
 
 # View the t-test result
 if (interactive()) {
@@ -43,7 +41,9 @@ if (interactive()) {
 #### DO NOT CHANGE
 
 # Output the results for tests
-output_t_test(t_test_result)
+if (!interactive()) {
+  output_t_test(t_test_result)
+}
 
 #### DO NOT CHANGE
 
@@ -59,38 +59,9 @@ output_t_test(t_test_result)
 # Create the student_scores dataset
 student_scores <- data.frame(
   school = rep(c("A", "B", "C"), each = 10),
-  score = c(
-    78,
-    82,
-    79,
-    85,
-    88,
-    90,
-    75,
-    80,
-    81,
-    86,
-    65,
-    70,
-    72,
-    75,
-    78,
-    80,
-    68,
-    70,
-    75,
-    77,
-    90,
-    95,
-    92,
-    85,
-    88,
-    92,
-    85,
-    90,
-    94,
-    88
-  )
+  score = c(78, 82, 79, 85, 88, 90, 75, 80, 81, 86,
+            65, 70, 72, 75, 78, 80, 68, 70, 75, 77,
+            90, 95, 92, 85, 88, 92, 85, 90, 94, 88)
 )
 
 # Step 2: Conducting the ANOVA
@@ -98,7 +69,7 @@ student_scores <- data.frame(
 # To conduct an ANOVA, use the aov() function with the appropriate formula.
 
 # Conduct the ANOVA using the 'aov()' function
-anova_result <- "..."
+anova_result <- aov(score ~ school, data = student_scores)
 
 # View the ANOVA result
 if (interactive()) {
@@ -107,7 +78,7 @@ if (interactive()) {
 }
 
 # Viewing the Pairwise differences
-tukeys_hsd_result <- "..."
+tukeys_hsd_result <- TukeyHSD(anova_result)
 
 # View the Tukey's HSD result
 if (interactive()) {
@@ -117,10 +88,12 @@ if (interactive()) {
 #### DO NOT CHANGE
 
 # Output the results for tests
+
 if (!interactive()) {
   output_aov(anova_result)
   output_tukey(tukeys_hsd_result)
 }
+
 #### DO NOT CHANGE
 
 
@@ -131,24 +104,20 @@ if (!interactive()) {
 # Step 1: Data Preparation
 # Load the lung_disease dataset.
 
-treatment <- get_chisq_data() # DO NOT CHANGE THIS LINE
+treatment <- get_chisq_data()
 
 # Step 2: Conducting the Chi-Square Test
 
 # To conduct a chi-square test, create a contingency table of the variables and use the chisq.test() function.
 
 # Create a contingency table of smoking status and lung disease
-contingency_table <- "..."
-
-# View the contingency table
-if (interactive()) {
-  contingency_table
-}
+contingency_table <- table(treatment$treatment, treatment$improvement)
 
 # Conduct the chi-square test using the 'chisq.test()' function
-chi_square_result <- "..."
+chi_square_result <- chisq.test(contingency_table)
 
 # View the chi-square test result
+
 if (interactive()) {
   chi_square_result
 }
@@ -156,6 +125,7 @@ if (interactive()) {
 #### DO NOT CHANGE
 
 # Output the results for tests
+
 if (!interactive()) {
   output_chi_square(chi_square_result)
 }
